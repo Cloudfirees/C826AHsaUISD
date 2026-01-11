@@ -2,312 +2,178 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Sekolah - Royan Firmansyah</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>VOID STORE | TRANSPARENT PREMIUM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <script src="https://unpkg.com/lucide@latest"></script>
-
     <style>
-        /* (AI PUGUH) KODE CSS ASLI LU - HARAM DIUBAH */
         :root {
-            --ios-bg: #ffffff;
-            --ios-accent: #007aff;
-            --ios-blur: rgba(255, 255, 255, 0.7);
+            /* LINK BG MASTER TETAP SAMA */
+            --bg-link: url('https://files.catbox.moe/f4f9h9.jpeg');
+            --accent: #007AFF;
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-            margin: 0; padding: 0; color: #000;
-            overflow-x: hidden; -webkit-tap-highlight-color: transparent;
-            background-color: #000;
-        }
-
-        .wallpaper-bg {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-image: url('https://files.catbox.moe/eq1ii6.jpg'); 
+            background: var(--bg-link) no-repeat center center fixed;
             background-size: cover;
-            background-position: center;
-            filter: blur(8px) brightness(0.8);
-            transform: scale(1.1);
-            z-index: -1;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            padding: 20px 0 50px 0;
         }
 
-        #viewHome, #jadwalContainer { position: relative; z-index: 1; }
-
-        .welcome-big { padding: 30px 20px 10px 20px; text-align: center; background: transparent; }
-        .welcome-big h2 {
-            font-size: 32px; font-weight: 900; margin: 0;
-            background: linear-gradient(45deg, #f09433, #dc2743, #bc1888, #007aff);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: moveGradient 4s infinite linear; background-size: 200% auto;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        /* Overlay super tipis biar background asli master kelihatan jelas */
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4); z-index: -1;
         }
-        @keyframes moveGradient { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
 
-        .ig-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); color: white; }
-        .ig-header h1 { font-size: 22px; font-weight: 700; letter-spacing: -1px; margin: 0; }
+        .container { max-width: 420px; margin: auto; padding: 0 15px; }
 
-        .stories-wrapper {
-            display: flex; gap: 12px; padding: 10px 20px 15px 20px;
-            overflow-x: auto; border-bottom: 0.5px solid rgba(255,255,255,0.2);
-            scrollbar-width: none; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);
+        header { text-align: center; margin-bottom: 25px; }
+        header h1 { font-size: 2.5rem; font-weight: 900; letter-spacing: -2px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        header p { font-size: 0.7rem; color: #fff; opacity: 0.8; font-weight: 800; letter-spacing: 2px; }
+
+        /* --- CARDS FULL TRANSPARENT --- */
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        
+        .card { 
+            /* BACKGROUND TRANSPARAN TOTAL */
+            background: rgba(255, 255, 255, 0.03); 
+            border: 1.5px solid rgba(255, 255, 255, 0.2); 
+            border-radius: 20px; padding: 25px 10px; text-align: center; position: relative; 
+            overflow: hidden; 
+            /* Blur halus biar teks gak tenggelam sama gambar belakang */
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
         }
-        .stories-wrapper::-webkit-scrollbar { display: none; }
-        .story-node { display: flex; flex-direction: column; align-items: center; min-width: 75px; cursor: pointer; }
-        .ring-ig {
-            width: 66px; height: 66px; border-radius: 50%; padding: 2.5px;
-            background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); margin-bottom: 5px;
+
+        .diskon-badge {
+            position: absolute; top: 0; right: 0; background: #FF3B30; color: #fff;
+            font-size: 0.6rem; font-weight: 900; padding: 4px 10px; border-radius: 0 0 0 12px;
         }
-        .ring-ig img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid white; }
-        .story-node span { font-size: 11px; color: #fff; width: 70px; text-align: center; font-weight: 500; }
 
-        #storyModal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; display: none; }
-        .story-progress-container { position: absolute; top: 10px; left: 0; width: 100%; padding: 0 10px; z-index: 10006; }
-        .progress-bar-bg { width: 100%; height: 2px; background: rgba(255,255,255,0.3); border-radius: 2px; overflow: hidden; }
-        .progress-bar-fill { height: 100%; background: #fff; width: 0%; }
-        .story-header-overlay { position: absolute; top: 25px; left: 15px; display: flex; align-items: center; gap: 10px; z-index: 10005; color: white; }
-        .story-header-overlay img { width: 35px; height: 35px; border-radius: 50%; border: 1px solid white; object-fit: cover; }
-        .s-name { font-size: 14px; font-weight: 600; }
-        .s-time { font-size: 13px; color: rgba(255,255,255,0.7); margin-left: 5px; }
-        .swiper-story { width: 100%; height: 100%; }
-        .story-slide img { width: 100%; height: 100%; object-fit: cover; }
-        .close-btn-ig { position: absolute; top: 25px; right: 20px; color: white; z-index: 10005; cursor: pointer; }
+        .card .ram-label { font-size: 2.8rem; font-weight: 900; color: #fff; display: block; text-shadow: 0 0 15px rgba(0,122,255,0.5); }
+        
+        .price-old { font-size: 0.75rem; color: rgba(255,255,255,0.4); text-decoration: line-through; margin-top: 5px; }
+        .price-new { font-size: 1.2rem; font-weight: 900; color: #34C759; margin-bottom: 15px; }
+        .price-new span { font-size: 0.7rem; color: #fff; opacity: 0.6; font-weight: 400; }
 
-        .profile-hero { padding: 20px; }
-        .hero-card { position: relative; width: 100%; height: 500px; border-radius: 24px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .hero-card img { width: 100%; height: 100%; object-fit: cover; }
-        .hero-text { position: absolute; bottom: 25px; left: 20px; color: white; z-index: 2; }
-        .hero-text h3 { margin: 5px 0 0; font-size: 26px; font-weight: 700; }
-        .hero-card::after { content: ''; position: absolute; bottom: 0; width: 100%; height: 40%; background: linear-gradient(transparent, rgba(0,0,0,0.8)); }
+        .buy-btn { 
+            background: #fff; color: #000; text-align: center; text-decoration: none; 
+            font-size: 0.85rem; font-weight: 900; padding: 12px; border-radius: 15px; display: block; 
+        }
 
-        .section-box { padding: 20px 0 20px 20px; }
-        .title-text { font-size: 20px; font-weight: 700; margin-bottom: 15px; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-        .card-potret { width: 160px !important; background: rgba(255,255,255,0.9); border-radius: 18px; overflow: hidden; cursor: pointer; }
-        .card-info { padding: 10px; }
-        .card-info h4 { margin: 0; font-size: 14px; }
-        .card-info p { margin: 2px 0 0; font-size: 12px; color: #333; }
-        .slide-landscape { width: 280px !important; height: 180px; border-radius: 18px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); cursor: pointer; }
-        .slide-landscape img { width: 100%; height: 100%; object-fit: cover; }
+        /* --- POPUP TRANSPARENT --- */
+        #orderPopup {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 9999; align-items: center; justify-content: center;
+        }
+        .popup-box {
+            background: rgba(20, 20, 20, 0.8); border: 1px solid rgba(255,255,255,0.1); 
+            width: 90%; max-width: 350px; padding: 25px; border-radius: 30px; backdrop-filter: blur(15px);
+        }
+        .popup-box h2 { font-size: 2rem; font-weight: 900; color: var(--accent); text-align: center; }
+        .pop-price { text-align: center; margin: 10px 0 20px 0; }
+        .pop-price .old { text-decoration: line-through; color: #888; font-size: 1rem; }
+        .pop-price .new { color: #34C759; font-size: 1.8rem; font-weight: 900; display: block; }
+        
+        .pop-benefits { margin-bottom: 25px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 20px; }
+        .pop-benefits div { font-size: 0.85rem; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+        .pop-benefits i { color: #34C759; }
 
-        #jadwalContainer { display: none; padding: 20px; }
-        /* (AI PUGUH) STYLE BARU UNTUK JADWAL GAMBAR */
-        .jadwal-img-box { width: 100%; background: rgba(255,255,255,0.9); border-radius: 20px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.2); cursor: pointer; }
-        .jadwal-img-box img { width: 100%; display: block; height: auto; }
+        .confirm-btn { background: var(--accent); color: #fff; padding: 16px; border-radius: 18px; display: block; text-decoration: none; font-weight: 800; text-align: center; margin-bottom: 10px; }
+        .cancel-btn { color: #aaa; display: block; text-decoration: none; font-size: 0.85rem; text-align: center; font-weight: 600; padding: 5px; }
 
-        .tab-bar { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 200px; height: 66px; background: rgba(255,255,255,0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 33px; display: flex; justify-content: space-evenly; align-items: center; box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 999; border: 1px solid rgba(255,255,255,0.2); }
-        .tab-item { display: flex; flex-direction: column; align-items: center; color: #333; cursor: pointer; }
-        .tab-item.active { color: #fff; }
-        .spacer { height: 110px; }
-
-        #iosNotify { position: fixed; top: -120px; left: 50%; transform: translateX(-50%); width: 92%; background: rgba(255,255,255,0.85); backdrop-filter: blur(20px); border-radius: 24px; padding: 12px 16px; z-index: 99999; display: flex; align-items: center; gap: 12px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); transition: top 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28); touch-action: none; }
-        #iosNotify.active { top: 15px; }
-        .confes-box { margin-top: 20px; background: rgba(255,255,255,0.9); border-radius: 20px; padding: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
-        .st-action { position: absolute; bottom: 30px; width: 100%; padding: 0 20px; box-sizing: border-box; display: flex; align-items: center; gap: 15px; z-index: 10010; }
-        .st-action input { flex:1; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 25px; padding: 12px 18px; color: white; outline: none; backdrop-filter: blur(10px); }
-        .st-link { position: absolute; bottom: 90px; width: 100%; text-align: center; z-index: 10010; display: none; }
-        .st-link a { background: rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 12px; color: white; text-decoration: none; font-size: 13px; font-weight: 600; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3); }
-        .lk-active { fill: #ff3b30 !important; color: #ff3b30 !important; }
-
-        #imgViewer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 20000; display: none; align-items: center; justify-content: center; flex-direction: column; text-align: center; }
-        #imgViewer img { max-width: 90%; max-height: 70%; border-radius: 12px; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
-        #imgViewer h4 { color: white; margin: 20px 0 5px 0; font-size: 18px; }
-        #imgViewer p { color: #ccc; margin: 0; font-size: 14px; }
+        .gift-btn { background: #34C759; color: #fff; text-align: center; padding: 20px; border-radius: 25px; text-decoration: none; display: block; margin-top: 30px; font-weight: 900; font-size: 1.2rem; }
     </style>
 </head>
 <body>
 
-    <div class="wallpaper-bg"></div>
+    <div class="container">
+        <header>
+            <h1>VOID STORE</h1>
+            <p>PREMIUM TRANSPARENT UI</p>
+        </header>
 
-    <div id="imgViewer" onclick="this.style.display='none'">
-        <img id="vImg" src="">
-        <h4 id="vName"></h4>
-        <p id="vRole"></p>
-        <span style="color:white; opacity:0.5; margin-top:30px; font-size:12px;">Ketuk dimana saja untuk menutup</span>
-    </div>
-
-    <div id="iosNotify">
-        <div style="background:#007aff; padding:8px; border-radius:12px;"><i data-lucide="bell" color="white" size="20"></i></div>
-        <div style="flex:1"><b style="font-size:13px; display:block; color:#000;">XIEEXCELLENT</b><span id="notifText" style="font-size:12px; color:#444;">Pesan terkirim!</span></div>
-        <div style="width:30px; height:4px; background:#ccc; border-radius:2px; position:absolute; bottom:6px; left:50%; transform:translateX(-50%);"></div>
-    </div>
-
-    <div id="storyModal">
-        <div class="story-progress-container"><div class="progress-bar-bg"><div class="progress-bar-fill" id="mainProgressBar"></div></div></div>
-        <div class="story-header-overlay">
-            <img id="mProf" src="" alt="">
-            <div><span id="mName" class="s-name"></span><span class="s-time" id="mTime"></span></div>
-        </div>
-        <div class="close-btn-ig" onclick="closeStories()"><i data-lucide="x"></i></div>
-
-        <div class="st-link" id="linkBox"><a href="https://www.instagram.com/iwakksee?igsh=MTh4OHhmYnFpd291aA==" target="_blank">LINK DEV</a></div>
-        <div class="st-action">
-            <input type="text" placeholder="Balas story..." id="stReply">
-            <i data-lucide="heart" color="white" id="lkBtn" onclick="likeSt()"></i>
-            <i data-lucide="send" color="white" onclick="shareSt()"></i>
+        <div class="grid" id="mainGrid">
+            <div class="card" style="border-color: gold;">
+                <div class="diskon-badge">HOT</div>
+                <span class="ram-label" style="color: gold;">ADP</span>
+                <div class="price-old">Rp 40.000</div>
+                <div class="price-new">Rp 20.000 <span>/bln</span></div>
+                <a href="javascript:void(0)" onclick="openOrder('ADP', '40.000', '20.000')" class="buy-btn" style="background: gold;">ORDER</a>
+            </div>
+            <div class="card" style="border-color: #34C759;">
+                <div class="diskon-badge">HOT</div>
+                <span class="ram-label" style="color: #34C759;">UNLI</span>
+                <div class="price-old">Rp 24.000</div>
+                <div class="price-new">Rp 12.000 <span>/bln</span></div>
+                <a href="javascript:void(0)" onclick="openOrder('UNLIMITED', '24.000', '12.000')" class="buy-btn" style="background: #34C759;">ORDER</a>
+            </div>
         </div>
 
-        <div class="swiper swiper-story"><div class="swiper-wrapper" id="storyWrapper"></div></div>
+        <a href="https://t.me/VoidsStore_Bot" class="gift-btn">
+            IKUTI HADIAH PANEL
+            <span style="display:block; font-size:0.65rem; opacity:0.9; font-weight:400; margin-top:4px;">Klik & Ketik /HADIAAH @VoidsStore_Bot</span>
+        </a>
     </div>
 
-    <div id="viewHome">
-        <div class="welcome-big"><h2>WELCOME TO 11E</h2></div>
-        <div class="ig-header"><h1>XIEEXCELLENT</h1><i data-lucide="heart"></i></div>
-        <div class="stories-wrapper" id="storyCircles"></div>
-
-        <section class="profile-hero">
-            <div class="hero-card">
-                <img src="https://files.catbox.moe/i7praa.jpg">
-                <div class="hero-text"><p>WALI KELAS KECE</p><h3>Royan Firmansyah</h3></div>
+    <div id="orderPopup">
+        <div class="popup-box">
+            <h2 id="popRam">1GB RAM</h2>
+            <div class="pop-price">
+                <span class="old" id="popOld">Rp 2.000</span>
+                <span class="new" id="popNew">Rp 1.000 <span>/bln</span></span>
             </div>
-        </section>
-
-        <section class="section-box">
-            <h2 class="title-text">Struktur Kelas</h2>
-            <div class="swiper swiper-s">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide card-potret" onclick="zoomImg('https://picsum.photos/400/600?random=11', 'Dra. Siti', 'Wali Kelas')"><img src="https://picsum.photos/400/600?random=11" style="width:100%; height:210px; object-fit:cover;"><div class="card-info"><h4>Wali Kelas</h4><p>Dra. Siti</p></div></div>
-                    <div class="swiper-slide card-potret" onclick="zoomImg('https://picsum.photos/400/600?random=12', 'Rasya', 'Ketua Kelas')"><img src="https://picsum.photos/400/600?random=12" style="width:100%; height:210px; object-fit:cover;"><div class="card-info"><h4>Ketua</h4><p>Rasya</p></div></div>
-                    <div class="swiper-slide card-potret" onclick="zoomImg('https://picsum.photos/400/600?random=13', 'Bunga', 'Sekretaris')"><img src="https://picsum.photos/400/600?random=13" style="width:100%; height:210px; object-fit:cover;"><div class="card-info"><h4>Sekretaris</h4><p>Bunga</p></div></div>
-                    <div class="swiper-slide card-potret" onclick="zoomImg('https://picsum.photos/400/600?random=14', 'Caca', 'Bendahara')"><img src="https://picsum.photos/400/600?random=14" style="width:100%; height:210px; object-fit:cover;"><div class="card-info"><h4>Bendahara</h4><p>Caca</p></div></div>
-                    <div class="swiper-slide card-potret" onclick="zoomImg('https://picsum.photos/400/600?random=15', 'Budi', 'Keamanan')"><img src="https://picsum.photos/400/600?random=15" style="width:100%; height:210px; object-fit:cover;"><div class="card-info"><h4>Keamanan</h4><p>Budi</p></div></div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section-box">
-            <h2 class="title-text">Momen Kebersamaan</h2>
-            <div class="swiper swiper-k">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide slide-landscape" onclick="zoomImg('https://files.catbox.moe/xnipfm.jpg', 'Kebersamaan', 'Slide 1')"><img src="https://files.catbox.moe/xnipfm.jpg"></div>
-                    <div class="swiper-slide slide-landscape" onclick="zoomImg('https://files.catbox.moe/z5ukar.jpg', 'Momen Seru', 'Slide 2')"><img src="https://files.catbox.moe/z5ukar.jpg"></div>
-                    <div class="swiper-slide slide-landscape" onclick="zoomImg('https://files.catbox.moe/kcvdzf.jpg', 'Solidaritas', 'Slide 3')"><img src="https://files.catbox.moe/kcvdzf.jpg"></div>
-                    <div class="swiper-slide slide-landscape" onclick="zoomImg('https://files.catbox.moe/w7h250.jpg', 'XI-E', 'Momen 4')"><img src="https://files.catbox.moe/w7h250.jpg"></div>
-                    <div class="swiper-slide slide-landscape" onclick="zoomImg('https://files.catbox.moe/418081.jpg', 'XI-E', 'Momen 5')"><img src="https://files.catbox.moe/418081.jpg"></div>
-                </div>
+            
+            <div class="pop-benefits">
+                <div style="color: #fff; font-weight: 700; margin-bottom: 12px; font-size: 0.9rem;">BENEFIT PANEL:</div>
+                <div><i class="fas fa-bolt"></i> Speed Keceng (NVMe SSD)</div>
+                <div><i class="fas fa-user-shield"></i> Anti Maling SC / Private</div>
+                <div><i class="fas fa-shield-alt"></i> Anti DDoS Protection</div>
+                <div><i class="fas fa-check-circle"></i> Garansi Full 30 Hari</div>
             </div>
 
-            <div style="padding-right:20px; margin-top:20px;">
-                <a href="https://www.instagram.com/xieexcellent?igsh=MW9zYXN6OWx4MmVrYw==" style="display:flex; align-items:center; justify-content:center; gap:8px; padding:12px; background:rgba(255,255,255,0.1); border-radius:15px; color:#fff; text-decoration:none; font-size:13px; border:1px solid rgba(255,255,255,0.2);">
-                    <i data-lucide="instagram" size="18"></i> INSTAGRAM KELAS
-                </a>
-            </div>
-        </section>
-    </div>
-
-    <div id="jadwalContainer">
-        <h2 class="title-text">Jadwal Pelajaran</h2>
-        <div class="jadwal-img-box" onclick="zoomImg('https://files.catbox.moe/j14r0m.jpg', 'Jadwal Pelajaran', 'XI-E Excellent')">
-            <img src="https://files.catbox.moe/j14r0m.jpg" alt="Jadwal Pelajaran">
-        </div>
-
-        <div class="confes-box">
-            <b style="font-size: 15px; color:#000;">Menfess Kelas</b>
-            <textarea id="cfMsg" style="width:100%; height:90px; border:1.5px solid #eee; border-radius:12px; padding:12px; font-family:inherit; outline:none; resize:none; box-sizing:border-box; background:#f9f9f9; margin-top:10px;" placeholder="Tulis pesan anonim..."></textarea>
-            <button onclick="sendConf()" style="width:100%; background:#007aff; color:white; border:none; padding:14px; border-radius:12px; margin-top:12px; font-weight:bold;">Kirim Sekarang</button>
+            <a href="#" id="finalOrderLink" class="confirm-btn">LANJUT ORDER</a>
+            <a href="javascript:void(0)" onclick="closeOrder()" class="cancel-btn">TIDAK, BATALKAN</a>
         </div>
     </div>
 
-    <div class="spacer"></div>
-    <nav class="tab-bar">
-        <div class="tab-item active" id="btnH" onclick="goto('home')"><i data-lucide="home"></i></div>
-        <div class="tab-item" id="btnJ" onclick="goto('jadwal')"><i data-lucide="calendar"></i></div>
-    </nav>
-
-    <audio id="iosSound" src="https://files.catbox.moe/859v6z.mp3" preload="auto"></audio>
-
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        const T1 = "8436387522:", T2 = "AAE7W2sARcC0Alfu44rZsFR9qs1PLgyvwLE", CID = "6942800042";
-        const storyData = [
-            { name: 'MakanBersama', profile: 'https://files.catbox.moe/dodjrz.jpg', img: 'https://files.catbox.moe/jp0b87.jpg', time: '1h', link: false },
-            { name: 'MakanMBG', profile: 'https://files.catbox.moe/dodjrz.jpg', img: 'https://files.catbox.moe/f1oza4.jpg', time: '3h', link: false },
-            { name: 'Dev', profile: 'https://files.catbox.moe/s57lwx.jpg', img: 'https://files.catbox.moe/ot998x.jpg', time: '5h', link: true }
-        ];
-
-        let sSwiper, pInt, pVal = 0, curIdx = 0, nTimer;
-
-        document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-            const sc = document.getElementById('storyCircles'), sw = document.getElementById('storyWrapper');
-            storyData.forEach((s, i) => {
-                sc.innerHTML += `<div class="story-node" onclick="openStories(${i})"><div class="ring-ig"><img src="${s.profile}"></div><span>${s.name}</span></div>`;
-                sw.innerHTML += `<div class="swiper-slide story-slide"><img src="${s.img}"></div>`;
-            });
-            new Swiper('.swiper-s', { slidesPerView: 'auto', spaceBetween: 15 });
-            new Swiper('.swiper-k', { slidesPerView: 'auto', spaceBetween: 15 });
-            sSwiper = new Swiper('.swiper-story', { speed: 400, on: { slideChange: function(){ startP(this.activeIndex); } } });
-
-            setTimeout(() => { triggerNotif("Selamat datang di Website XI-E!"); }, 1500);
-
-            const n = document.getElementById('iosNotify');
-            let sY = 0;
-            n.addEventListener('touchstart', e => sY = e.touches[0].clientY);
-            n.addEventListener('touchmove', e => { if(sY - e.touches[0].clientY > 40) n.classList.remove('active'); });
-
-            document.getElementById('stReply').onkeypress = (e) => {
-                if(e.key==='Enter' && e.target.value){ sendT(`💬 Balasan Story ${storyData[curIdx].name}: ${e.target.value}`); e.target.value=''; triggerNotif("Balasan story terkirim!"); }
-            };
-        });
-
-        function triggerNotif(msg) {
-            const n = document.getElementById('iosNotify');
-            document.getElementById('notifText').innerText = msg;
-            document.getElementById('iosSound').play().catch(()=>{});
-            n.classList.add('active');
-            clearTimeout(nTimer); nTimer = setTimeout(() => n.classList.remove('active'), 4500);
-        }
-
-        function zoomImg(src, name, role) {
-            document.getElementById('vImg').src = src;
-            document.getElementById('vName').innerText = name;
-            document.getElementById('vRole').innerText = role;
-            document.getElementById('imgViewer').style.display = 'flex';
-        }
-
-        function startP(idx) {
-            curIdx = idx; clearInterval(pInt); pVal = 0;
-            const bar = document.getElementById('mainProgressBar');
-            const lk = document.getElementById('lkBtn');
-            lk.classList.remove('lk-active');
-            document.getElementById('mName').innerText = storyData[idx].name;
-            document.getElementById('mProf').src = storyData[idx].profile;
-            document.getElementById('mTime').innerText = storyData[idx].time;
-            document.getElementById('linkBox').style.display = storyData[idx].link ? 'block' : 'none';
-            pInt = setInterval(() => {
-                pVal += 1; bar.style.width = pVal + '%';
-                if(pVal >= 100) { if(idx < storyData.length-1) sSwiper.slideNext(); else closeStories(); }
-            }, 50);
-        }
-
-        function openStories(i) { document.getElementById('storyModal').style.display='block'; sSwiper.slideTo(i, 0); startP(i); }
-        function closeStories() { clearInterval(pInt); document.getElementById('storyModal').style.display='none'; }
+        const grid = document.getElementById('mainGrid');
         
-        function goto(p) {
-            const h = document.getElementById('viewHome'), j = document.getElementById('jadwalContainer');
-            const th = document.getElementById('btnH'), tj = document.getElementById('btnJ');
-            if(p==='home'){ h.style.display='block'; j.style.display='none'; th.classList.add('active'); tj.classList.remove('active'); }
-            else { h.style.display='none'; j.style.display='block'; th.classList.remove('active'); tj.classList.add('active'); }
+        // Loop 1GB - 10GB: Harga 1K/GB
+        for (let i = 1; i <= 10; i++) {
+            let hargaAsli = i * 2;
+            let hargaDiskon = i; 
+            
+            const div = document.createElement('div');
+            div.className = 'card';
+            div.innerHTML = `
+                <div class="diskon-badge">50% OFF</div>
+                <span class="ram-label">${i}GB</span>
+                <div class="price-old">Rp ${hargaAsli}.000</div>
+                <div class="price-new">Rp ${hargaDiskon}.000 <span>/bln</span></div>
+                <a href="javascript:void(0)" onclick="openOrder('${i}GB', '${hargaAsli}.000', '${hargaDiskon}.000')" class="buy-btn">ORDER</a>
+            `;
+            grid.appendChild(div);
         }
 
-        function sendT(m) { fetch(`https://api.telegram.org/bot${T1}${T2}/sendMessage?chat_id=${CID}&text=${encodeURIComponent(m)}`); }
-        function sendConf() { const m = document.getElementById('cfMsg').value; if(m){ sendT(`💌 MENFESS: ${m}`); document.getElementById('cfMsg').value=''; triggerNotif("Menfess terkirim!"); } }
-        function likeSt() { document.getElementById('lkBtn').classList.add('lk-active'); sendT(`❤️ Like Story: ${storyData[curIdx].name}`); triggerNotif("Menyukai story!"); }
-        
-        function shareSt() { 
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Website XI-E Smandak',
-                    url: window.location.href
-                }).then(() => {
-                    sendT(`🔗 Berhasil Share Story: ${storyData[curIdx].name}`);
-                }).catch(() => {});
-            } else {
-                navigator.clipboard.writeText(window.location.href);
-                triggerNotif("Link disalin!");
-            }
+        function openOrder(ram, oldPrice, newPrice) {
+            document.getElementById('popRam').innerText = ram + " PANEL";
+            document.getElementById('popOld').innerText = "Normal: Rp " + oldPrice;
+            document.getElementById('popNew').innerHTML = "Rp " + newPrice + " <span>/bln</span>";
+            
+            const pesan = `Halo Owner VoidPedia, saya mau order:\n\nProduk: ${ram} PANEL\nHarga Promo: Rp ${newPrice}\n\nReady Master?`;
+            document.getElementById('finalOrderLink').href = `https://t.me/VoidPedia?text=${encodeURIComponent(pesan)}`;
+            
+            document.getElementById('orderPopup').style.display = 'flex';
+        }
+
+        function closeOrder() {
+            document.getElementById('orderPopup').style.display = 'none';
         }
     </script>
 </body>
